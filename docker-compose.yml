@@ -1,0 +1,21 @@
+services:
+  # Define os serviços que serão executados.
+  mongodb:
+    # Nome do serviço.
+    image: mongo # Imagem Docker a ser utilizada para o serviço MongoDB, a imagem oficial do MongoDB.
+    container_name: mongodb-kanban-app # Nome do container.
+    ports:
+      # Mapeamento das portas entre o host e o container.
+      - "27017:27017" # Mapeia a porta 27017 do host para a porta 27017 do container.
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      # Definição de volumes para persistir dados.
+      - C:/Users/louri/OneDrive/Documentos/git/kanban-app/mongodb-data:/data/db # Cria um volume chamado "mongodb_data" e monta no diretório "/data/db" do container.
+  kanban-app:
+    build: .
+    container_name: kanban-app
+    ports:
+      - "8080:8080"
+
