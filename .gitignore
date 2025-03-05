@@ -21,6 +21,9 @@ bin/
 # NetBeans
 nb-configuration.xml
 
+# Banco de dados do mongoDB
+mongodb-data
+
 # Visual Studio Code
 .vscode
 .factorypath
