@@ -1,4 +1,4 @@
-package br.com.kanbanquarkus;
+package br.com.kanbanquarkus.resources;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
