@@ -1,4 +1,4 @@
-package br.com.kanbanquarkus.repositories;
+package br.com.kanbanquarkus.dao;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class TaskRepository implements PanacheMongoRepository<Task> {
+public class TaskDao implements PanacheMongoRepository<Task> {
 
     public List<Task> findByStatus(String status) {
         return find("status", status).list();
     }
-}
 
+}

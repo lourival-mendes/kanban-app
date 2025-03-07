@@ -1,14 +1,10 @@
 package br.com.kanbanquarkus.resources;
 
-import java.util.List;
-
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import br.com.kanbanquarkus.dto.TaskDTO;
-import br.com.kanbanquarkus.entities.Task;
 import br.com.kanbanquarkus.services.TaskService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -19,50 +15,66 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("tasks")
+@APIResponses(value = {
+        @APIResponse(responseCode = "200", description = "Requisição bem sucedida"),
+        @APIResponse(responseCode = "400", description = "Requisição inválida"),
+        @APIResponse(responseCode = "401", description = "Não autorizado"),
+        @APIResponse(responseCode = "403", description = "Acesso negado"),
+        @APIResponse(responseCode = "404", description = "Recurso não encontrado"),
+        @APIResponse(responseCode = "500", description = "Erro interno do servidor"),
+})
 public class TaskResource {
 
+    private final TaskService taskService;
+
     @Inject
-    TaskService taskService;
+    public TaskResource(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @GET
-    @APIResponse(responseCode = "200", description = "Requisição bem-sucedida", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class)))
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Task> getAllTasks() {
-        return taskService.getAllTasks();
+    public Response listAll() {
+        return Response.ok().entity(taskService.listAll()).build();
+    }
+
+    @POST
+    @Path("/filter")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response filter(@RequestBody TaskDTO taskDTO) {
+        System.out.println(">>> RestAPI -> filter");
+
+        return Response.ok().entity(taskService.filter(taskDTO)).build();
     }
 
     @GET
     @Path("/{id}")
-    @APIResponse(responseCode = "200", description = "Requisição bem-sucedida", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class)))
     @Produces(MediaType.APPLICATION_JSON)
-    public Task getById(@PathParam("id") String id) {
-        return taskService.getById(id);
+    public Response findById(@PathParam("id") String id) {
+        return Response.ok().entity(taskService.findById(id)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    @APIResponse(responseCode = "200", description = "Requisição bem-sucedida", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class)))
-    @Produces(MediaType.APPLICATION_JSON)
     public void deleteTask(@PathParam("id") String id) {
-        taskService.deleteTask(id);
+        taskService.deleteById(id);
     }
 
     @POST
     @Path("/{id}")
-    @APIResponse(responseCode = "200", description = "Requisição bem-sucedida", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class)))
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void updateTask(@PathParam("id") String id, @RequestBody TaskDTO task) {
-        taskService.updateTask(id, task);
+    public void update(@PathParam("id") String id, @RequestBody TaskDTO task) {
+        taskService.update(id, task);
     }
 
     @POST
-    @APIResponse(responseCode = "204", description = "Requisição bem-sucedida")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public void addTask(@RequestBody TaskDTO task) {
-        taskService.addTask(task);
+    public void persist(@RequestBody TaskDTO task) {
+        taskService.persist(task);
     }
 
 }

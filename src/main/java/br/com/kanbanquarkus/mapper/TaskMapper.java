@@ -5,6 +5,9 @@ import br.com.kanbanquarkus.entities.Task;
 
 public class TaskMapper {
 
+    private TaskMapper() {
+    }
+
     public static Task toTask(TaskDTO taskDTO) {
         if (taskDTO == null) {
             return null;

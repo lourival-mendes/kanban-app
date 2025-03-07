@@ -22,6 +22,8 @@ public class MongoResource {
     @Path("status")
     @Produces(MediaType.TEXT_PLAIN)
     public Response checkMongoConnection() {
+        System.out.println(">>> mongoDB conectado!");
+
         try {
             MongoDatabase database = mongoClient.getDatabase("kanbandb");
             database.listCollectionNames().first();
