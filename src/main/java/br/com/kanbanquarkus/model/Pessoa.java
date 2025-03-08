@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @MongoEntity
 public class Pessoa extends PanacheMongoEntity {
+
     private String nome;
     private Integer idade;
     private String cidade;

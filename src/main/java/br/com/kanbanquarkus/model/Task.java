@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@MongoEntity(collection = "tasks")
+@MongoEntity
 public class Task extends PanacheMongoEntity {
 
     private String title;

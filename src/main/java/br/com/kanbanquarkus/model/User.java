@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@MongoEntity(collection = "users")
+@MongoEntity
 public class User extends PanacheMongoEntity {
 
     public String username;

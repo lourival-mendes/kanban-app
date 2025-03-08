@@ -13,8 +13,8 @@ public class PessoaMapper {
             return null;
         }
 
-        return new Pessoa(pessoaDTO.getNome(), pessoaDTO.getIdade(), pessoaDTO.getCidade(), pessoaDTO.getProfissao(),
-                pessoaDTO.getEmail(), pessoaDTO.getStatus());
+        return new Pessoa(pessoaDTO.nome(), pessoaDTO.idade(), pessoaDTO.cidade(), pessoaDTO.profissao(),
+                pessoaDTO.email(), pessoaDTO.status());
     }
 
     public static PessoaDTO toPessoaDTO(Pessoa pessoa) {

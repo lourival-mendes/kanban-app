@@ -1,7 +1,5 @@
 package br.com.kanbanquarkus.resources;
 
-import java.util.List;
-
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
@@ -49,16 +47,10 @@ public class PessoaResource {
 
     @POST
     @Path("/filter")
-    public PaginatedResponse<List<PessoaProjection>> filter(@RequestBody PessoaDTO pessoaDTO,
+    public PaginatedResponse<PessoaProjection> filter(@RequestBody PessoaDTO pessoaDTO,
             @QueryParam("page") int pagina,
             @QueryParam("size") int tamanho) {
-        PaginatedResponse<List<PessoaProjection>> resposta = pessoaService.filter(pessoaDTO, pagina, tamanho);
-
-        System.out.println("Resultados: " + resposta.getResultados());
-        System.out.println("Total de registros: " + resposta.getTotalRegistros());
-        System.out.println("Total de páginas: " + resposta.getTotalPaginas());
-        System.out.println("Página atual: " + resposta.getPaginaAtual());
-        System.out.println("Tamanho da página: " + resposta.getTamanhoPagina());
+        PaginatedResponse<PessoaProjection> resposta = pessoaService.buscarPessoas(pessoaDTO, pagina, tamanho);
         return resposta;
     }
 

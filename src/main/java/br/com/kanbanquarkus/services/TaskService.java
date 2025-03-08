@@ -61,9 +61,8 @@ public class TaskService {
     }
 
     public List<Task> filter(TaskDTO taskDTO) {
-        LOGGER.info(">>> TaskService -> filter");
-        LOGGER.info(taskDTO);
 
+        LOGGER.info(">>> TaskService -> filter");
         Document query = new Document();
 
         if (taskDTO == null) {
@@ -77,9 +76,6 @@ public class TaskService {
         if (taskDTO.description() != null && !taskDTO.description().isEmpty()) {
             query.append("description", taskDTO.description());
         }
-
-        LOGGER.info(">>> TaskService -> query");
-        LOGGER.info(query);
 
         if (query.isEmpty()) {
             throw new RuntimeException("Nenhum filtro foi informado e a busca não pode ser realizada.");
