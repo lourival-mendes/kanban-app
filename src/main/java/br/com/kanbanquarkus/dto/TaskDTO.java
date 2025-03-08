@@ -1,4 +1,6 @@
 package br.com.kanbanquarkus.dto;
 
-public record TaskDTO(String title, String description, String status) {
+import br.com.kanbanquarkus.enums.TaskStatus;
+
+public record TaskDTO(String title, String description, TaskStatus status) {
 }

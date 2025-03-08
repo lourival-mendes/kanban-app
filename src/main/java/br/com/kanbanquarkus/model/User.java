@@ -1,4 +1,4 @@
-package br.com.kanbanquarkus.entities;
+package br.com.kanbanquarkus.model;
 
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;

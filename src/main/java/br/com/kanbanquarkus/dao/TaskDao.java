@@ -2,7 +2,7 @@ package br.com.kanbanquarkus.dao;
 
 import java.util.List;
 
-import br.com.kanbanquarkus.entities.Task;
+import br.com.kanbanquarkus.model.Task;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

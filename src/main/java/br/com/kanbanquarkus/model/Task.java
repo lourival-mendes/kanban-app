@@ -1,5 +1,6 @@
-package br.com.kanbanquarkus.entities;
+package br.com.kanbanquarkus.model;
 
+import br.com.kanbanquarkus.enums.TaskStatus;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,6 @@ public class Task extends PanacheMongoEntity {
 
     private String title;
     private String description;
-    private String status;
+    private TaskStatus status;
 
 }

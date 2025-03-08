@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.jboss.logging.Logger;
 
 import br.com.kanbanquarkus.dao.TaskDao;
 import br.com.kanbanquarkus.dto.TaskDTO;
-import br.com.kanbanquarkus.entities.Task;
 import br.com.kanbanquarkus.mapper.TaskMapper;
+import br.com.kanbanquarkus.model.Task;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -16,6 +17,7 @@ import jakarta.inject.Inject;
 public class TaskService {
 
     private final TaskDao taskDao;
+    private static final Logger LOGGER = Logger.getLogger(TaskService.class);
 
     @Inject
     public TaskService(TaskDao taskDao) {
@@ -59,8 +61,8 @@ public class TaskService {
     }
 
     public List<Task> filter(TaskDTO taskDTO) {
-        System.out.println(">>> TaskService -> filter");
-        System.out.println(taskDTO);
+        LOGGER.info(">>> TaskService -> filter");
+        LOGGER.info(taskDTO);
 
         Document query = new Document();
 
@@ -76,11 +78,8 @@ public class TaskService {
             query.append("description", taskDTO.description());
         }
 
-        if (taskDTO.status() != null && !taskDTO.status().isEmpty()) {
-            query.append("status", taskDTO.status());
-        }
-        System.out.println(">>> TaskService -> query");
-        System.out.println(query);
+        LOGGER.info(">>> TaskService -> query");
+        LOGGER.info(query);
 
         if (query.isEmpty()) {
             throw new RuntimeException("Nenhum filtro foi informado e a busca não pode ser realizada.");

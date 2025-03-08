@@ -1,7 +1,7 @@
 package br.com.kanbanquarkus.mapper;
 
 import br.com.kanbanquarkus.dto.TaskDTO;
-import br.com.kanbanquarkus.entities.Task;
+import br.com.kanbanquarkus.model.Task;
 
 public class TaskMapper {
 
