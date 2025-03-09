@@ -80,7 +80,10 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-annotations</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

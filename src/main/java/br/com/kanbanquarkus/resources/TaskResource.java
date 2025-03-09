@@ -26,6 +26,8 @@ import jakarta.ws.rs.core.Response;
         @APIResponse(responseCode = "404", description = "Recurso não encontrado"),
         @APIResponse(responseCode = "500", description = "Erro interno do servidor"),
 })
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class TaskResource {
 
     private final TaskService taskService;
@@ -41,19 +43,15 @@ public class TaskResource {
         return Response.ok().entity(taskService.listAll()).build();
     }
 
+    // TODO: Implementar o método filter com paginação
     @POST
     @Path("/filter")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response filter(@RequestBody TaskDTO taskDTO) {
-        System.out.println(">>> RestAPI -> filter");
-
         return Response.ok().entity(taskService.filter(taskDTO)).build();
     }
 
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("id") String id) {
         return Response.ok().entity(taskService.findById(id)).build();
     }
@@ -66,8 +64,6 @@ public class TaskResource {
 
     @POST
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public void update(@PathParam("id") String id, @RequestBody TaskDTO task) {
         taskService.update(id, task);
     }
