@@ -16,6 +16,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("tasks")
 @APIResponses(value = {
@@ -40,7 +41,7 @@ public class TaskResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listAll() {
-        return Response.ok().entity(taskService.listAll()).build();
+        return Response.status(Status.OK).entity(taskService.listAll()).build();
     }
 
     // TODO: Implementar o método filter com paginação
@@ -58,19 +59,21 @@ public class TaskResource {
 
     @DELETE
     @Path("/{id}")
-    public void deleteTask(@PathParam("id") String id) {
+    public Response deleteTask(@PathParam("id") String id) {
         taskService.deleteById(id);
+        return Response.status(Status.NO_CONTENT).build();
     }
 
     @POST
     @Path("/{id}")
-    public void update(@PathParam("id") String id, @RequestBody TaskDTO task) {
+    public Response update(@PathParam("id") String id, @RequestBody TaskDTO task) {
         taskService.update(id, task);
+        return Response.status(Status.OK).build();
     }
 
     @POST
-    public void persist(@RequestBody TaskDTO task) {
+    public Response persist(@RequestBody TaskDTO task) {
         taskService.persist(task);
+        return Response.status(Status.CREATED).build();
     }
-
 }

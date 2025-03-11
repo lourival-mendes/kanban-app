@@ -54,7 +54,7 @@ public class PessoaService {
                 .orElseThrow(() -> new RuntimeException("Pessoa not found"));
 
         Pessoa pessoa = PessoaMapper.toPessoa(pessoaDTO);
-        pessoa.id = objectId;
+        pessoa.setId(objectId);
 
         pessoaDao.update(pessoa);
     }

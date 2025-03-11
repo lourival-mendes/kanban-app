@@ -6,7 +6,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.jboss.logging.Logger;
 
-import br.com.kanbanquarkus.dao.TaskDao;
 import br.com.kanbanquarkus.dto.TaskDTO;
 import br.com.kanbanquarkus.mapper.TaskMapper;
 import br.com.kanbanquarkus.model.Task;
@@ -16,44 +15,44 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class TaskService {
 
-    private final TaskDao taskDao;
+    private final Task task;
     private static final Logger LOGGER = Logger.getLogger(TaskService.class);
 
     @Inject
-    public TaskService(TaskDao taskDao) {
-        this.taskDao = taskDao;
+    public TaskService(Task task) {
+        this.task = task;
     }
 
     public void persist(TaskDTO taskDTO) {
-        taskDao.persist(TaskMapper.toTask(taskDTO));
+        task.persist(TaskMapper.toTask(taskDTO));
     }
 
     public List<Task> listAll() {
-        return taskDao.listAll();
+        return task.listAll();
     }
 
     public List<Task> findByStatus(String status) {
-        return taskDao.findByStatus(status);
+        return task.findByStatus(status);
     }
 
     public void deleteById(String id) {
-        taskDao.deleteById(new ObjectId(id));
+        task.deleteById(new ObjectId(id));
     }
 
     public Task findById(String id) {
-        return taskDao.findById(new ObjectId(id));
+        return task.findById(new ObjectId(id));
     }
 
     public void update(String id, TaskDTO taskDTO) {
 
         ObjectId objectId = new ObjectId(id);
-        taskDao.findByIdOptional(objectId)
+        task.findByIdOptional(objectId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        Task task = TaskMapper.toTask(taskDTO);
-        task.id = objectId;
+        Task taskMapper = TaskMapper.toTask(taskDTO);
+        taskMapper.id = objectId;
 
-        taskDao.update(task);
+        task.update(taskMapper);
     }
 
     public void update(TaskDTO taskDTO) {
@@ -80,7 +79,7 @@ public class TaskService {
         if (query.isEmpty()) {
             throw new RuntimeException("Nenhum filtro foi informado e a busca não pode ser realizada.");
         } else {
-            return taskDao.find(query).list();
+            return task.find(query).list();
         }
     }
 

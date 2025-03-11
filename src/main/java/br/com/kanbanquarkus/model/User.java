@@ -16,7 +16,6 @@ public class User extends PanacheMongoEntity {
     public String password;
     public String email;
     public String name;
-    public Role role;
     public String avatar;
     public String bio;
     public String location;

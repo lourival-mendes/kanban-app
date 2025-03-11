@@ -13,7 +13,7 @@ public class PessoaMapper {
             return null;
         }
 
-        return new Pessoa(pessoaDTO.nome(), pessoaDTO.idade(), pessoaDTO.cidade(), pessoaDTO.profissao(),
+        return new Pessoa(null, pessoaDTO.nome(), pessoaDTO.idade(), pessoaDTO.cidade(), pessoaDTO.profissao(),
                 pessoaDTO.email(), pessoaDTO.status());
     }
 
