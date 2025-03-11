@@ -59,45 +59,9 @@ public class PessoaService {
         pessoaDao.update(pessoa);
     }
 
-    public void update(PessoaDTO pessoaDTO) {
-        throw new RuntimeException("Pessoa not found");
-    }
-
     public PaginatedResponse<PessoaProjection> buscarPessoas(PessoaDTO pessoaDTO, int page, int size) {
 
-        StringBuilder query = new StringBuilder();
-        Map<String, Object> params = new HashMap<>();
-
-        if (pessoaDTO.nome() != null) {
-            query.append("nome = :nome ");
-            params.put("nome", pessoaDTO.nome());
-        }
-        if (pessoaDTO.idade() != null) {
-            if (!params.isEmpty())
-                query.append("and ");
-            query.append("idade = :idade ");
-            params.put("idade", pessoaDTO.idade());
-        }
-        if (pessoaDTO.cidade() != null) {
-            if (!params.isEmpty())
-                query.append("and ");
-            query.append("cidade = :cidade ");
-            params.put("cidade", pessoaDTO.cidade());
-        }
-        if (pessoaDTO.profissao() != null) {
-            if (!params.isEmpty())
-                query.append("and ");
-            query.append("profissao = :profissao ");
-            params.put("profissao", pessoaDTO.profissao());
-        }
-        if (pessoaDTO.email() != null) {
-            if (!params.isEmpty())
-                query.append("and ");
-            query.append("email = :email ");
-            params.put("email", pessoaDTO.email());
-        }
-
-        PanacheQuery<PessoaProjection> panacheQuery = pessoaDao.find(query.toString(), params)
+        PanacheQuery<PessoaProjection> panacheQuery = pessoaDao.find(montaQuery(pessoaDTO), montaParams(pessoaDTO))
                 .project(PessoaProjection.class);
 
         long totalRegistros = panacheQuery.count();
@@ -105,6 +69,58 @@ public class PessoaService {
         List<PessoaProjection> resultado = panacheQuery.page(Page.of(page, size)).list();
 
         return new PaginatedResponse<>(resultado, totalRegistros, totalPaginas, page, size);
+    }
+
+    private String montaQuery(PessoaDTO pessoaDTO) {
+        StringBuilder query = new StringBuilder();
+
+        if (pessoaDTO.nome() != null) {
+            query.append("nome = :nome ");
+        }
+        if (pessoaDTO.idade() != null) {
+            if (!query.isEmpty())
+                query.append("and ");
+            query.append("idade = :idade ");
+        }
+        if (pessoaDTO.cidade() != null) {
+            if (!query.isEmpty())
+                query.append("and ");
+            query.append("cidade = :cidade ");
+        }
+        if (pessoaDTO.profissao() != null) {
+            if (!query.isEmpty())
+                query.append("and ");
+            query.append("profissao = :profissao ");
+        }
+        if (pessoaDTO.email() != null) {
+            if (!query.isEmpty())
+                query.append("and ");
+            query.append("email = :email ");
+        }
+
+        return query.toString();
+    }
+
+    private Map<String, Object> montaParams(PessoaDTO pessoaDTO) {
+        Map<String, Object> params = new HashMap<>();
+
+        if (pessoaDTO.nome() != null) {
+            params.put("nome", pessoaDTO.nome());
+        }
+        if (pessoaDTO.idade() != null) {
+            params.put("idade", pessoaDTO.idade());
+        }
+        if (pessoaDTO.cidade() != null) {
+            params.put("cidade", pessoaDTO.cidade());
+        }
+        if (pessoaDTO.profissao() != null) {
+            params.put("profissao", pessoaDTO.profissao());
+        }
+        if (pessoaDTO.email() != null) {
+            params.put("email", pessoaDTO.email());
+        }
+
+        return params;
     }
 
 }
