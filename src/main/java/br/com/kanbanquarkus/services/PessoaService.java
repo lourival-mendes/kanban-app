@@ -66,7 +66,10 @@ public class PessoaService {
 
         long totalRegistros = panacheQuery.count();
         int totalPaginas = (int) Math.ceil((double) totalRegistros / size);
-        List<PessoaProjection> resultado = panacheQuery.page(Page.of(page-1, size)).list();
+        if (page < 1) {
+            page = 1;
+        }
+        List<PessoaProjection> resultado = panacheQuery.page(Page.of(page - 1, size)).list();
 
         return new PaginatedResponse<>(resultado, totalRegistros, totalPaginas, page, size);
     }
