@@ -9,10 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class PessoaDao implements PanacheMongoRepository<Pessoa> {
 
-    private String nomeDaClasse;
-
-    String timestamp;
-
     public List<Pessoa> findByProfissao(String profissao) {
         return find("profissao", profissao).list();
     }
