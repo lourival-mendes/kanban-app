@@ -50,8 +50,7 @@ public class PessoaResource {
     public PaginatedResponse<PessoaProjection> filter(@RequestBody PessoaDTO pessoaDTO,
             @QueryParam("page") int pagina,
             @QueryParam("size") int tamanho) {
-        PaginatedResponse<PessoaProjection> resposta = pessoaService.buscarPessoas(pessoaDTO, pagina, tamanho);
-        return resposta;
+        return pessoaService.buscarPessoas(pessoaDTO, pagina, tamanho);
     }
 
     @GET
